@@ -1,2 +1,8 @@
 $('#modal').html('<%= j render('new') %>');
 $('#modal').modal();
+
+$(document).ready(function() {
+   $('#modal-login').click(function() {
+   $('#modal').modal('hide');
+   });
+});

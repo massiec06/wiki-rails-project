@@ -12,7 +12,9 @@ class WikiPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       elsif user.premium?
-        scope.where(private: true, user_id: user.id)
+        scope.all
+      elsif user.standard?
+        scope.all
       else
         scope.where(private: false)
       end
