@@ -1,7 +1,7 @@
 class WikisController < ApplicationController
 
   def index
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
   end
 
   def show
@@ -13,15 +13,16 @@ class WikisController < ApplicationController
   end
 
   def create
-     @wiki = Wiki.new
-     @wiki.title = params[:wiki][:title]
-     @wiki.body = params[:wiki][:body]
+     @wiki = current_user.wikis.build(wiki_params)
+    #  @wiki.title = params[:wiki][:title]
+    #  @wiki.body = params[:wiki][:body]
+    #  @wiki.user = current_user
 
-     if @wiki.save
+    if @wiki.save
       flash[:notice] = "Wiki was saved."
       redirect_to @wiki
     else
-      flash.now[:alert] = "There was an error saving the wiki. Please try again."
+      flash.now[:alert] = @wiki.errors.full_messages.to_sentence #"There was an error saving the wiki. Please try again."
       render :new
     end
   end
@@ -32,14 +33,14 @@ class WikisController < ApplicationController
 
   def update
      @wiki = Wiki.find(params[:id])
-     @wiki.title = params[:wiki][:title]
-     @wiki.body = params[:wiki][:body]
+    #  @wiki.title = params[:wiki][:title]
+    #  @wiki.body = params[:wiki][:body]
 
-     if @wiki.save
+     if @wiki.update(wiki_params)
        flash[:notice] = "Wiki was updated."
        redirect_to @wiki
      else
-       flash.now[:alert] = "There was an error saving the wiki. Please try again."
+       flash.now[:alert] = @wiki.errors.full_messages.to_sentence #"There was an error saving the wiki. Please try again."
        render :edit
      end
    end
@@ -54,5 +55,11 @@ class WikisController < ApplicationController
       flash.now[:alert] = "There was an error deleting the wiki."
       render :show
     end
+  end
+
+  private
+
+  def wiki_params
+    params.require(:wiki).permit(:title, :body, :private)
   end
 end
