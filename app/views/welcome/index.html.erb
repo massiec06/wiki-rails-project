@@ -2,9 +2,13 @@
    <h1>Wiki Rails Project!</h1>
    <p>Welcome to Chris Massie's Wiki Project!</p>
    <p>
-      <div id=”modal” class=”modal fade”>
+     <% if user_signed_in? %>
+        Hello <strong><%= current_user.email %></strong>!
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
         <%= link_to "Sign In", new_user_session_path, remote: true %> or
         <%= link_to "Sign Up", new_user_registration_path, :class => 'btn btn-primary', remote: true %> today!
      </div>
+
    </p>
 </div>

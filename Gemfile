@@ -52,3 +52,7 @@ gem 'devise'
 gem 'faker', :git => 'git://github.com/stympy/faker.git', :branch => 'master'
 
 gem "pundit"
+
+gem 'stripe'
+
+gem 'figaro', '1.0'
