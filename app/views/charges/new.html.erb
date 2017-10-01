@@ -1,4 +1,25 @@
-<%= form_tag charges_path do %>
- <h4>Click the button!</h4>
- <script class='stripe-button' src="https://checkout.stripe.com/checkout.js" data-key="<%= @stripe_btn_data[:key] %>" data-amount="<%= @stripe_btn_data[:amount] %>" data-description="<%= @stripe_btn_data[:description] %>" ></script>
-<% end %>
+<div class="container">
+
+  <div class="text-center">
+    <h1>Want to upgrade?</h1>
+    <br>
+    <br>
+    <h3>Upgrading will allow you to create a Wiki with limited editing rights.
+    <br>
+    <br>
+    You choose who can add-to and colloborate on your Wiki's.</h3>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="text-center">
+    <%= form_tag charges_path do %>
+      <script class='stripe-button' src="https://checkout.stripe.com/checkout.js"
+      data-key="<%= @stripe_btn_data[:key] %>"
+      data-amount="<%= @stripe_btn_data[:amount] %>"
+      data-description="<%= @stripe_btn_data[:description] %>" >
+      </script>
+    <% end %>
+  </div>
+</div>

@@ -1,14 +1,27 @@
-<div class="main_menu">
+<div class="main_menu text-center">
    <h1>Wiki Rails Project!</h1>
    <p>Welcome to Chris Massie's Wiki Project!</p>
    <p>
-     <% if user_signed_in? %>
+     <% if user_signed_in? && current_user.premium? %>
         Hello <strong><%= current_user.email %></strong>!
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
-        <%= link_to "Sign Out", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+        </br>
+        <%= link_to 'Edit profile', edit_user_registration_path, remote: true %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete, remote: true %>
+        </br>
+        </br>
+        Thank you for being a premium member!
+        </br>
+        Remember you can always <%= link_to "Downgrade", downgrade_create_path, method: :create, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to downgrade?'} %>
+     <% elsif user_signed_in? && current_user.standard? %>
+         Hello <strong><%= current_user.email %></strong>!
+         </br>
+         <%= link_to 'Edit profile', edit_user_registration_path, remote: true %>
+         <%= link_to "Sign Out", destroy_user_session_path, method: :delete, remote: true %>
+         </br>
+         Become a premium member today! <%= link_to "Upgrade", new_charge_path, :class => 'navbar-link btn btn-success text-center upgrade' %>
+     <% else %>
         <%= link_to "Sign In", new_user_session_path, remote: true %> or
         <%= link_to "Sign Up", new_user_registration_path, :class => 'btn btn-primary', remote: true %> today!
-     </div>
-
+     <% end %>
    </p>
 </div>
