@@ -2,21 +2,22 @@
    <h1>Wiki Rails Project!</h1>
    <p>Welcome to Chris Massie's Wiki Project!</p>
    <p>
-     <% if user_signed_in? && current_user.premium? %>
+     <% if user_signed_in? && (current_user.premium? || current_user.admin?) %>
         Hello <strong><%= current_user.email %></strong>!
         </br>
-        <%= link_to 'Edit profile', edit_user_registration_path, remote: true %>
-        <%= link_to "Sign Out", destroy_user_session_path, method: :delete, remote: true %>
+        <%= link_to 'Edit profile', edit_user_registration_path %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
         </br>
         </br>
         Thank you for being a premium member!
         </br>
-        Remember you can always <%= link_to "Downgrade", downgrade_create_path, method: :create, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to downgrade?'} %>
+        How about we check out <%= link_to "Private Wikis", wikis_path, class: 'btn btn-primary' %>
+        or you can always <%= link_to "Downgrade", downgrade_create_path, method: :create, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to downgrade?'} %>
      <% elsif user_signed_in? && current_user.standard? %>
          Hello <strong><%= current_user.email %></strong>!
          </br>
-         <%= link_to 'Edit profile', edit_user_registration_path, remote: true %>
-         <%= link_to "Sign Out", destroy_user_session_path, method: :delete, remote: true %>
+         <%= link_to 'Edit profile', edit_user_registration_path%>
+         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
          </br>
          Become a premium member today! <%= link_to "Upgrade", new_charge_path, :class => 'navbar-link btn btn-success text-center upgrade' %>
      <% else %>

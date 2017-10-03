@@ -14,9 +14,10 @@ class WikiPolicy < ApplicationPolicy
       elsif user.premium?
         scope.all
       elsif user.standard?
-        scope.all
+        # scope.all
+        scope.where('private = ? OR private IS NULL', false)
       else
-        scope.where(private: false)
+        []
       end
     end
   end

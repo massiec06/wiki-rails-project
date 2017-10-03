@@ -13,12 +13,19 @@
     <div id="modal" class="modal fade"></div>
     <div class="container">
       <ul class="nav nav-tabs">
-        <li><%= link_to "Wiki Project", root_path %></li>
-        <li><%= link_to "About", about_path %></li>
-        <li><%= link_to "Wikis", wikis_path %></li>
+        <% if user_signed_in? && current_user.premium? %>
+          <li><%= link_to "Wiki Project", root_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li><%= link_to "Wikis", wikis_path %></li>
+          <li><%= link_to "Private Wikis", wikis_path %></li>
+        <% else %>
+          <li><%= link_to "Wiki Project", root_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li><%= link_to "Wikis", wikis_path %></li>
+        <% end %>
 
         <div class="pull-right user-info">
-          <% if user_signed_in? && current_user.premium? %>
+          <% if user_signed_in? && (current_user.premium? || current_user.admin?) %>
              Signed in as: <strong><%= current_user.email %></strong>
             </br>
             <li class="pull-right"><%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> </li>
