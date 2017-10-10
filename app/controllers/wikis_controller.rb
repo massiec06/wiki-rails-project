@@ -6,6 +6,9 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
+    @collaborators = @wiki.collaborators
+    exisiting_collab_ids = @collaborators.collect(&:user_id) << current_user.id
+    @available_collaborators = User.where('id NOT IN (?)', exisiting_collab_ids)
   end
 
   def new

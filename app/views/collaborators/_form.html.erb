@@ -1,0 +1,33 @@
+<div class="container main-content">
+  <div class="center-block text-center">
+    <h1 class="text-center">Add Collaborators to the <%= @wiki.title %> (showing all users)
+    </h1>
+    <br>
+    <br>
+  </div>
+  <div class="text-center scroll signup-content">
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th class="pull-left buffer">User</th>
+          <th>Access</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td class="pull-left buffer"><%= truncate(user.email, :length => 22) %></td>
+            <td>
+              <% if @wiki.users.include?(user) %>
+                <% collaborator = @wiki.collaborators.where(user_id: user.id).first %>
+                <%= link_to "Remove", [@wiki, collaborator], method: :delete, class: "btn btn-danger" %>
+              <% else %>
+                <%= link_to "Add", wiki_collaborators_path(@wiki, user_id: user.id), method: :post, class: "btn btn-success" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
